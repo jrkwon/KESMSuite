@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     QStringList args = a.arguments();
 
-    std::cout << ">>> KESM Cropper ver <<<" << kTissueAreaOutlierRemoverVersion << std::endl;
+    std::cout << ">>> KESM Cropper ver <<<" << kCropperVersion << std::endl;
     std::cout << "Cut one one rectangular region of the image." << std::endl;
 
     if(args.size() < 7)

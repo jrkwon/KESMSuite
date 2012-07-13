@@ -55,6 +55,7 @@ bool TissueAreaWriter::writeFile(const QString &fileName)
         writer.writeAttribute(kNAME, column.images[i].name);
 
         writer.writeTextElement(kSTARTX, QString::number(column.images[i].startX));
+        writer.writeTextElement(kNEW_STARTX, QString::number(column.images[i].newStartX));
 //        writer.writeTextElement(kSTARTX_ORG, QString::number(column.images[i].orgStartX));
 //        writer.writeTextElement(kADJUST, column.images[i].adjust ? kTRUE : kFALSE);
         writer.writeTextElement(kVALID, column.images[i].valid ? kTRUE : kFALSE);
@@ -78,10 +79,11 @@ bool TissueAreaWriter::writeCSVFile(const QString &fileName)
     }
 
     QTextStream out(&file);
-    out << kNAME << ", " << kSTARTX << "\n";
+    out << kNAME << ", " << kSTARTX << ", " << kNEW_STARTX << "\n";
 
     for (int i = 0; i < column.images.size(); i++) {
-        out << column.images[i].name << ", " << column.images[i].startX << "\n";
+        out << column.images[i].name << ", "
+            << column.images[i].startX << ", " << column.images[i].newStartX << "\n";
     }
 
     file.close();

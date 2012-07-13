@@ -11,7 +11,7 @@ KESM_NAMESPACE_START
 class Cropper
 {
 public:
-    bool crop(QString imageName, QRect &rect, QString croppedImageName, bool overWrite = true);
+    bool crop(QString imageName, QRect &rect, QString croppedImageName, bool overWrite = false);
 
 private:
 

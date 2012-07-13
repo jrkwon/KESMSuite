@@ -49,14 +49,10 @@ int main(int argc, char *argv[])
 
     //------------------------------------------------------------------------
     // Remove outliers and identify chunks
-    remover.removeShortBurst();
-    /*remover.removeLongBurst(kDefaultFactorForWindowSize);
-    remover.removeLongBurst(kDefaultFactorForWindowSize+1);
-    remover.removeLongBurst(kDefaultFactorForWindowSize+2);
-    remover.removeLongBurst(kDefaultFactorForWindowSize+3);
-    remover.saveChunkList();
+    remover.removeOutliers();
+    remover.smoothingChunks();
 
-    remover.removeShortBurst();*/
+    //remover.saveChunkList();
 
     //------------------------------------------------------------------------
     // Get Tissue Area Writer ready

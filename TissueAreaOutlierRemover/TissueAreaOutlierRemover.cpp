@@ -26,7 +26,7 @@ void TissueAreaOutlierRemover::saveChunkList()
 }
 
 
-void TissueAreaOutlierRemover::removeShortBurst()
+void TissueAreaOutlierRemover::removeOutliers()
 {
     int maxIndex = column->images.size();
     int sum;
@@ -94,169 +94,50 @@ void TissueAreaOutlierRemover::removeShortBurst()
                     column->images[i+m].changed = true;
                 }
             }
-#if 0
-            outlierImages = j = 0;
-            while(k+i+j < maxIndex) {
-                if(qAbs(column->images[k+j+i].startX - column->images[k+j+i-1].startX) > kImageChunkThreshold) {
-                    sum += (column->images[k+j+i].startX - column->images[k+j+i-1].startX);
-                    k++;
-                    outlierImages = 0; // reset it
-                    std::cout << i << ":accum sum: " << sum << " k:" << k << std::endl;
-                }
-                else {
-                    if(k != 0)
-                        sum += (column->images[k+j+i].startX - column->images[k+j+i-1].startX);
-
-                    j++;
-                    // tolerate a few consecutive wrong images
-                    if(outlierImages++ >= kMaxOutlierImages)
-                        break;
-                }
-            }
-            // --------------
-            // check outliers
-            if(qAbs(sum) < kMaxRightEdgeDifference) {
-                for(int m = 0; m < k+j; m++) {
-                    std::cout << m << ":reset: i+m: " << i+m << ", org:" <<  column->images[i+m].startX << ", new: " << column->images[i-1].startX << std::endl;
-                    column->images[i+m].startX = column->images[i-1].startX;
-                    column->images[i+m].changed = true;
-                }
-            }
-            else if (i != maxIndex-1){
-                // identify a new chunk
-                chunks.append(i);
-                std::cout << i << ": new chunk: startX: " << column->images[i].startX << std::endl;
-            }
-#endif
         }
     }
 }
 
-void TissueAreaOutlierRemover::removeLongBurst(int factorForWindowSize)
+void TissueAreaOutlierRemover::scanChunks()
 {
     int maxIndex = column->images.size();
+    int i;
 
-    for(int i = 1; i < maxIndex; i++) {
-        std::cout << i << ":" << column->images[i].startX << std::endl;
+    chunks.append(0); // at least, there is one chunk that starts from 0.
+    for(i = 1; i < maxIndex-1; i++) {
         if(qAbs(column->images[i].startX - column->images[i-1].startX) > kImageChunkThreshold) {
-            std::cout << i << ":misaligned candidate: " << column->images[i].startX << " diff: " << qAbs(column->images[i].startX - column->images[i-1].startX) << std::endl;
-
-            int sum = 0;
-            int k;
-            int maxConsecutiveWrongImages = 0;
-            // ------------------
-            // sum of differences
-//            for(k = 0; (k+i < maxIndex) && qAbs(column->images[k+i].startX - column->images[k+i-1].startX) > kImageChunkThreshold; k++) {
-
-            for(k = 0; (k+i < maxIndex); maxConsecutiveWrongImages++) {
-                sum += (column->images[k+i].startX - column->images[k+i-1].startX);
-                k++;
-                std::cout << i << ":accum sum: " << sum << " k:" << k << std::endl;
-                // tolerate a few consecutive wrong images
-                if(maxConsecutiveWrongImages >= kMaxConsecutiveWrongImages*factorForWindowSize)
-                    break;
-            }
-            // --------------
-            // check outliers
-            if(qAbs(sum) < kMaxRightEdgeDifference) {
-                for(int m = 0; m < k; m++) {
-                    std::cout << m << ":reset: i+m: " << i+m << ", org:" <<  column->images[i+m].startX << ", new: " << column->images[i-1].startX << std::endl;
-                    column->images[i+m].startX = column->images[i-1].startX;
-                    column->images[i+m].changed = true;
-                }
-            }
+            chunks.append(i);
         }
     }
+    chunks.append(maxIndex); // add last image index
 }
 
-
-/* ---------------------------------
-void TissueAreaOutlierRemover::removeShortBurst()
+void TissueAreaOutlierRemover::smoothingChunks()
 {
     int maxIndex = column->images.size();
+    int i, c;
+    int count;
+    long sum;
+    QList<int> average;
 
-    //------------------------------------------------------------------------
-    // 1st round: Remove short bursts
-    for(int i = 1; i < maxIndex; i++) {
-        std::cout << i << ":" << column->images[i].startX << std::endl;
+    scanChunks();
 
-        if(qAbs(column->images[i].startX - column->images[i-1].startX) > kImageChunkThreshold) {
-
-            std::cout << i << ":misaligned candidate: " << column->images[i].startX << " diff: " << qAbs(column->images[i].startX - column->images[i-1].startX) << std::endl;
-
-            int sum = 0;
-            int k;
-            int maxOutlierImages;
-            // ------------------
-            // sum of differences
-//            for(k = 0; (k+i < maxIndex) && qAbs(column->images[k+i].startX - column->images[k+i-1].startX) > kImageChunkThreshold; k++) {
-
-            for(maxOutlierImages = k = 0; maxOutlierImages+k+i < maxIndex; maxOutlierImages++) {
-                if(qAbs(column->images[maxOutlierImages+k+i].startX - column->images[maxOutlierImages+k+i-1].startX) > kImageChunkThreshold) {
-                    sum += (column->images[k+i].startX - column->images[k+i-1].startX);
-                    k++;
-                    std::cout << i << ":accum sum: " << sum << " k:" << k << std::endl;
-                }
-                else {
-                    // tolerate a few consecutive wrong images
-                    if(maxOutlierImages >= kMaxOutlierImages)
-                        break;
-                }
-            }
-            // --------------
-            // check outliers
-            if(qAbs(sum) < kMaxRightEdgeDifference) {
-                for(int m = 0; m < k; m++) {
-                    std::cout << m << ":reset: i+m: " << i+m << ", org:" <<  column->images[i+m].startX << ", new: " << column->images[i-1].startX << std::endl;
-                    column->images[i+m].startX = column->images[i-1].startX;
-                    column->images[i+m].changed = true;
-                }
-            }
-            else if (i != maxIndex-1){
-                // identify a new chunk
-                chunks.append(i);
-                std::cout << i << ": new chunk: startX: " << column->images[i].startX << std::endl;
-            }
+    // get the average of x start from each range
+    for(i = 0, c = 1; c < chunks.size(); c++) {
+        sum = 0;
+        for(count = 0; i < chunks[c] && i < maxIndex; i++, count++) {
+            sum += column->images[i].startX;
         }
+        if(count != 0 )
+            average.append(sum/count);
+        else
+            average.append(sum); // just in case
+    }
+
+    for(i = 0, c = 1; c < chunks.size(); c++) {
+        for(; i < chunks[c] && i < maxIndex; i++)
+            column->images[i].newStartX = average[c-1];
     }
 }
-
-void TissueAreaOutlierRemover::removeLongBurst(int factorForWindowSize)
-{
-    int maxIndex = column->images.size();
-
-    for(int i = 1; i < maxIndex; i++) {
-        std::cout << i << ":" << column->images[i].startX << std::endl;
-        if(qAbs(column->images[i].startX - column->images[i-1].startX) > kImageChunkThreshold) {
-            std::cout << i << ":misaligned candidate: " << column->images[i].startX << " diff: " << qAbs(column->images[i].startX - column->images[i-1].startX) << std::endl;
-
-            int sum = 0;
-            int k;
-            int maxConsecutiveWrongImages = 0;
-            // ------------------
-            // sum of differences
-//            for(k = 0; (k+i < maxIndex) && qAbs(column->images[k+i].startX - column->images[k+i-1].startX) > kImageChunkThreshold; k++) {
-
-            for(k = 0; (k+i < maxIndex); maxConsecutiveWrongImages++) {
-                sum += (column->images[k+i].startX - column->images[k+i-1].startX);
-                k++;
-                std::cout << i << ":accum sum: " << sum << " k:" << k << std::endl;
-                // tolerate a few consecutive wrong images
-                if(maxConsecutiveWrongImages >= kMaxConsecutiveWrongImages*factorForWindowSize)
-                    break;
-            }
-            // --------------
-            // check outliers
-            if(qAbs(sum) < kMaxRightEdgeDifference) {
-                for(int m = 0; m < k; m++) {
-                    std::cout << m << ":reset: i+m: " << i+m << ", org:" <<  column->images[i+m].startX << ", new: " << column->images[i-1].startX << std::endl;
-                    column->images[i+m].startX = column->images[i-1].startX;
-                    column->images[i+m].changed = true;
-                }
-            }
-        }
-    }
-}
-------------------------------------------- */
 
 KESM_NAMESPACE_END

@@ -15,8 +15,9 @@ public:
 
 public:
     void saveChunkList();
-    void removeShortBurst();
-    void removeLongBurst(int factorForWindowSize);
+    void removeOutliers();
+    void scanChunks();
+    void smoothingChunks();
 
 public:
     QString sourceXMLFilename;
