@@ -14,12 +14,12 @@ int main(int argc, char *argv[])
 
     if(args.size() < 3)
     {
-        std::cout << ">>> KESM Tissue Area Dectector Controller ver 1.0 <<<" << std::endl;
+        std::cout << ">>> KESM Tissue Area Dectector Controller ver " << kTissueAreaDetectorControllerVersion << " <<<" << std::endl;
         std::cout << "Detects the tissue areas of all KESM raw images in a column." << std::endl;
 
         QFileInfo pathInfo(args[0]);
         QString fileName(pathInfo.completeBaseName());
-        std::cout << qPrintable(fileName )<< " SrcRawDataFolder ColumnNumber DstRootDataFolder" << std::endl;
+        std::cout << qPrintable(fileName )<< " SrcRawDataFolder DstRootDataFolder ColumnNumber" << std::endl;
         return kKESM_ERROR;
     }
     ///////////////////////////

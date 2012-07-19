@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
     if(args.size() < 3)
     {
-        std::cout << ">>> KESM Cropper Controller ver <<<" << kCropperVersion << std::endl;
+        std::cout << ">>> KESM Cropper Controller ver <<<" << kCropperControllerVersion << std::endl;
         std::cout << "Manages Cropper." << std::endl;
 
         QFileInfo pathInfo(args[0]);

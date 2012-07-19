@@ -25,6 +25,7 @@ public:
 
 private:
     void relight(int direction, ConstIteratorType InputIt, IteratorType OutputIt);
+
 };
 
 KESM_NAMESPACE_END

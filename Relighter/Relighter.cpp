@@ -6,9 +6,11 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
 #include "itkImage.h"
+#include "itkIntensityWindowingImageFilter.h"
 
 typedef itk::ImageFileReader<ImageType> ReaderType;
 typedef itk::ImageFileWriter<ImageType> WriterType;
+typedef itk::IntensityWindowingImageFilter<ImageType, ImageType> IntensityWindowingImageFilterType;
 ///////////////////////////
 
 KESM_NAMESPACE_START
@@ -58,18 +60,29 @@ bool Relighter::execute(QString inImageFileName, QString outImageFileName, bool 
     outputImage->Allocate();
     outputImage->FillBuffer(itk::NumericTraits<ImageType::PixelType>::max());//Zero);
 
+    // normalize intensity
     ConstIteratorType itInputX(inputImage, region);
     IteratorType      itOutputX(outputImage, region);
-    relight(1, itInputX, itOutputX);
+    relight(0, itInputX, itOutputX);
 
-/*    ConstIteratorType itInputY(outputImage, region);
+    ConstIteratorType itInputY(outputImage, region);
     IteratorType      itOutputY(outputImage, region);
     relight(1, itInputY, itOutputY);
-*/
+
+    // make image brighter to remove background
+    IntensityWindowingImageFilterType::Pointer filter = IntensityWindowingImageFilterType::New();
+    filter->SetInput(outputImage);
+    filter->SetWindowMinimum(kMinIntensity4Relight);
+    filter->SetWindowMaximum(kMaxIntensity4Relight);
+    filter->SetOutputMinimum(kMinPixelIntensity);
+    filter->SetOutputMaximum(kMaxPixelIntensity);
+    filter->Update();
+
     // create the relighted image
     WriterType::Pointer writer = WriterType::New();
     writer->SetFileName(outImageFileName.toStdString());
-    writer->SetInput(outputImage );
+    //writer->SetInput(outputImage );
+    writer->SetInput(filter->GetOutput());
 
     try
     {
@@ -135,7 +148,8 @@ void Relighter::relight(int direction, ConstIteratorType itInput, IteratorType i
                     continue;
                 }
             }
-            double adjustedPixelValue = (pixelValue/(double)median) * nILLUMINATION;
+            double adjustedPixelValue = (pixelValue/(double)median) * nILLUMINATION ; //+ 120;
+            //adjustedPixelValue += (pixelValue > 140) ? 120 : 0;
             pixelValue = (adjustedPixelValue > (double)nMAX_PIXEL_VALUE)
                     ? (PixelType)nMAX_PIXEL_VALUE : (PixelType)adjustedPixelValue;
             itOutput.Set(pixelValue);
