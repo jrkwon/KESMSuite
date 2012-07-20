@@ -24,24 +24,31 @@ KESM_NAMESPACE_START
 
 //-----------------------------------------------------------------------------
 // KESM Suite version
-#define kTissueAreaDetectorVersion              "1.0"
-#define kTissueAreaDetectorControllerVersion    "1.0"
-#define kTissueAreaOutlierRemoverVersion        "1.0"
-#define kCropperVersion                         "1.0"
-#define kCropperControllerVersion               "1.0"
-#define kRelighterVersion                       "1.0"
+#define kTissueAreaDetectorVersion                          "0.8"
+#define kTissueAreaDetectorControllerVersion                "0.8"
+#define kTissueAreaOutlierRemoverVersion                    "0.8"
+#define kTissueAreaOutlierRemoverControllerVersion          "0.8"
+#define kCropperVersion                                     "0.8"
+#define kCropperControllerVersion                           "0.8"
+#define kRelighterVersion                                   "0.8"
+#define kRelighterControllerVersion                         "0.8"
 
 //-----------------------------------------------------------------------------
 // Tissue Area Detector
 
+#define KESM_SUITE_PATH                     "K:/Projects/KESMSuite/"
 #ifdef kKESM_DEBUG
-#define kTISSUE_AREA_DETECTOR               "K:/Projects/KESMSuite/TissueAreaDetector-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaDetector.exe"
-#define kTISSUE_AREA_DETECTOR_CONTROLLER    "K:/Projects/KESMSuite/TissueAreaDetectorController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaDetectorController.exe"
-#define kCROPPER                            "K:/Projects/KESMSuite/Cropper-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Cropper.exe"
+#define kTISSUE_AREA_DETECTOR               KESM_SUITE_PATH"TissueAreaDetector-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaDetector.exe"
+#define kTISSUE_AREA_DETECTOR_CONTROLLER    KESM_SUITE_PATH"TissueAreaDetectorController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaDetectorController.exe"
+#define kTISSUE_AREA_OUTLIER_REMOVER        KESM_SUITE_PATH"TissueAreaOutlierRemover-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaOutlierRemover.exe"
+#define kCROPPER                            KESM_SUITE_PATH"Cropper-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Cropper.exe"
+#define kRELIGHTER                          KESM_SUITE_PATH"Relighter-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Relighter.exe"
 #else
-#define kTISSUE_AREA_DETECTOR               "K:/Projects/KESMSuite/bin/TissueAreaDetector.exe"
-#define kTISSUE_AREA_DETECTOR_CONTROLLER    "K:/Projects/KESMSuite/bin/TissueAreaDetectorController.exe"
-#define kCROPPER                            "K:/Projects/KESMSuite/bin/Cropper.exe"
+#define kTISSUE_AREA_DETECTOR               KESM_SUITE_PATH"bin/TissueAreaDetector.exe"
+#define kTISSUE_AREA_DETECTOR_CONTROLLER    KESM_SUITE_PATH"bin/TissueAreaDetectorController.exe"
+#define kTISSUE_AREA_OUTLIER_REMOVER        KESM_SUITE_PATH"bin/TissueAreaOutlierRemover.exe"
+#define kCROPPER                            KESM_SUITE_PATH"bin/Cropper.exe"
+#define kRELIGHTER                          KESM_SUITE_PATH"bin/Relighter.exe"
 #endif
 
 

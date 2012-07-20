@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     if(args.size() < 5)
     {
-        std::cout << ">>> KESM Tissue Area Outlier Remover ver <<<" << kTissueAreaOutlierRemoverVersion << std::endl;
+        std::cout << ">>> KESM Tissue Area Outlier Remover ver " << kTissueAreaOutlierRemoverVersion << " <<<" << std::endl;
         std::cout << "Removes outliers and identifies chunks." << std::endl;
 
         QFileInfo pathInfo(args[0]);
