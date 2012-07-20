@@ -31,13 +31,13 @@ void TissueAreaOutlierRemoverController::processFinished(int exitCode, QProcess:
 {
     if(exitStatus == QProcess::CrashExit)
     {
-        qDebug() << "Relighter program crashed.";
+        qDebug() << "Program crashed.";
         isProcessError = true;
     }
     else {
         switch(exitCode) {
         case 0: // success code for cropper
-            qDebug() << "Relight succeeded.";
+            qDebug() << "Succeeded.";
             break;
         default:
             qDebug() << "Error occurred.";
