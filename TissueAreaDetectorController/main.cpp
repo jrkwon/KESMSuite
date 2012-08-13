@@ -3,7 +3,7 @@
 #include <QDir>
 #include <iostream>
 #include "../include/kesm.h"
-#include "RawDataReader.h"
+#include "../RawDataReader/RawDataReader.h"
 #include "TissueAreaWriter.h"
 #include "TissueAreaDetectorController.h"
 

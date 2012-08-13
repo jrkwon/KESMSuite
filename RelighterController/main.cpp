@@ -5,7 +5,7 @@
 #include <QTextStream>
 #include <iostream>
 #include "RelighterController.h"
-#include "RawDataReader.h"
+#include "..\RawDataReader\RawDataReader.h"
 
 int main(int argc, char *argv[])
 {

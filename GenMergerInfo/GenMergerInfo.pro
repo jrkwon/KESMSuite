@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2011-10-27T16:19:27
+# Project created by QtCreator 2012-08-09T13:40:09
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core
 
 QT       -= gui
 
-TARGET = TissueAreaDetectorController
+TARGET = GenMergerInfo
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -16,14 +16,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    TissueAreaWriter.cpp \
-    TissueAreaDetectorController.cpp \
-    RawDataReader.cpp \
+    GenMergerInfo.cpp \
     ../RawDataReader/RawDataReader.cpp
 
 HEADERS += \
-    TissueAreaWriter.h \
-    TissueAreaDetectorController.h \
+    GenMergerInfo.h \
     ../RawDataReader/RawDataReader.h
 
 

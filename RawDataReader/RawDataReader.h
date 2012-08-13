@@ -12,22 +12,33 @@ KESM_NAMESPACE_START
 #define kVERSION        "1.0"
 #define kKESM           "kesm"
 #define kNAME           "name"
+
 #define kDATE           "date"
 #define kYEAR           "year"
 #define kMONTH          "month"
 #define kDAY            "day"
+
 #define kSPECIMEN       "specimen"
 #define kANIMAL         "animal"
 #define kORGAN          "organ"
 #define kDESCRIPTION    "description"
+
 #define kPIXEL          "pixel"
 #define kWIDTH          "width"
 #define kHEIGHT         "height"
+
 #define kCUTTING        "cutting"
 #define kEDGE           "edge"
 #define kCOLUMNS        "columns"
 #define kDISTANCE       "distance"
 #define kDEPTH          "depth"
+#define kMinZ           "minz"
+#define kMaxZ           "maxz"
+
+#define kTissue         "tissue"
+//#define kWIDTH          "width"
+//#define kHEIGHT         "height"
+
 
 class RawData {
     struct Date {
@@ -44,10 +55,17 @@ class RawData {
     };
 
     struct Cutting {
-        QString edge;
+        KnifeEdgeSide edge;
         int columns;
         int distance;
-        int depth;
+        float depth;
+        float minz;
+        float maxz;
+    };
+
+    struct Tissue {
+        int width;
+        int height;
     };
 
 public:
@@ -56,6 +74,7 @@ public:
     struct Specimen specimen;
     struct Pixel pixel;
     struct Cutting cutting;
+    struct Tissue tissue;
     ////////////////////////////
     // actual tissue area width
     // tissueWidth = cutting.distance/pixel.width
@@ -93,6 +112,12 @@ private:
     void readColumnsElement();
     void readDistanceElement();
     void readDepthElement();
+    void readMinZElement();
+    void readMaxZElement();
+    // -- Tissue
+    void readTissueElement();
+    void readTissueWidthElement();
+    void readTissueHeightElement();
 
     void skipUnknownElement();
 

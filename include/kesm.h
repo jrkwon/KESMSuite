@@ -15,23 +15,28 @@ KESM_NAMESPACE_START
 #define kKESM_OK                    0
 
 #define kSOURCE_IMAGE_FILE_EXT      ".jpg"
+#define kBackgroundColor            0xFF
 
 #define kCROPPED_FOLDER_NAME        "Cropped"
 #define kRELIGHTED_FOLDER_NAME      "Relighted"
 #define kMERGED_FOLDER_NAME         "Merged"
+#define kMergerInfoFolderName       "MergerInfo"
 #define kTILED_FOLDER_NAME          "Tiled"
 #define kSCALED_FOLDER_NAME         "Scaled"
 
 //-----------------------------------------------------------------------------
 // KESM Suite version
-#define kTissueAreaDetectorVersion                          "0.8"
-#define kTissueAreaDetectorControllerVersion                "0.8"
-#define kTissueAreaOutlierRemoverVersion                    "0.8"
-#define kTissueAreaOutlierRemoverControllerVersion          "0.8"
-#define kCropperVersion                                     "0.8"
-#define kCropperControllerVersion                           "0.8"
-#define kRelighterVersion                                   "0.8"
-#define kRelighterControllerVersion                         "0.8"
+#define kKESMSuiteVersion                                   "0.8"
+#define kTissueAreaDetectorVersion                          kKESMSuiteVersion
+#define kTissueAreaDetectorControllerVersion                kKESMSuiteVersion
+#define kTissueAreaOutlierRemoverVersion                    kKESMSuiteVersion
+#define kTissueAreaOutlierRemoverControllerVersion          kKESMSuiteVersion
+#define kCropperVersion                                     kKESMSuiteVersion
+#define kCropperControllerVersion                           kKESMSuiteVersion
+#define kRelighterVersion                                   kKESMSuiteVersion
+#define kRelighterControllerVersion                         kKESMSuiteVersion
+#define kMergerVersion                                      kKESMSuiteVersion
+#define kMergerControllerVersion                            kKESMSuiteVersion
 
 //-----------------------------------------------------------------------------
 // Tissue Area Detector
@@ -43,12 +48,14 @@ KESM_NAMESPACE_START
 #define kTISSUE_AREA_OUTLIER_REMOVER        KESM_SUITE_PATH"TissueAreaOutlierRemover-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaOutlierRemover.exe"
 #define kCROPPER                            KESM_SUITE_PATH"Cropper-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Cropper.exe"
 #define kRELIGHTER                          KESM_SUITE_PATH"Relighter-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Relighter.exe"
+#define kMergerProcessName                  KESM_SUITE_PATH"Merger-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Merger.exe"
 #else
 #define kTISSUE_AREA_DETECTOR               KESM_SUITE_PATH"bin/TissueAreaDetector.exe"
 #define kTISSUE_AREA_DETECTOR_CONTROLLER    KESM_SUITE_PATH"bin/TissueAreaDetectorController.exe"
 #define kTISSUE_AREA_OUTLIER_REMOVER        KESM_SUITE_PATH"bin/TissueAreaOutlierRemover.exe"
 #define kCROPPER                            KESM_SUITE_PATH"bin/Cropper.exe"
 #define kRELIGHTER                          KESM_SUITE_PATH"bin/Relighter.exe"
+#define kMergerProcessName                  KESM_SUITE_PATH"bin/Merger.exe"
 #endif
 
 
@@ -102,6 +109,10 @@ public:
 
 };
 
+enum KnifeEdgeSide {
+    KESLeft, KESRight
+};
+
 #define kMinPixelIntensity                      0
 #define kMaxPixelIntensity                      255
 
@@ -117,6 +128,21 @@ public:
 // Relighter
 #define kMinIntensity4Relight                   0
 #define kMaxIntensity4Relight                   140
+
+//-----------------------------------------------------------------------------
+// Merger & GenMergerInfo
+#define kMergerInfoFolder                       "MergerInfo"
+#define kMergerInfoFile                         "MergerInfo.txt"
+#define kMergerInfoFormat                       "i%05dz%.4f.txt"
+#define kInvertImageFlag                             "i:"
+
+#define kTagNumberOfImagesToMerge   "NumberOfImagesToMerge"
+#define kTagImageWidth              "ImageWidth"
+#define kTagImageHeight             "ImageHeight"
+#define kTagBaseDir                 "BaseDir"
+#define kTagEdge                    "Edge"
+#define kLeft                       "Left"
+#define kRight                      "Right"
 
 KESM_NAMESPACE_END
 
