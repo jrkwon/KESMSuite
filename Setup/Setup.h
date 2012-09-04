@@ -1,5 +1,5 @@
-#ifndef KESM_H
-#define KESM_H
+#ifndef SETUP_H
+#define SETUP_H
 
 #include <QString>
 #include <QVector>
@@ -7,20 +7,18 @@
 #define KESM_NAMESPACE_START namespace KESM {
 #define KESM_NAMESPACE_END   }
 
-KESM_NAMESPACE_START
-
+///////////////////////////////////////////////////////////////
+// system init values
 #define kKESM_DEBUG                 1
 
-#define kKESM_ERROR                 -1
-#define kKESM_OK                    0
-
-#define kSOURCE_IMAGE_FILE_EXT      ".jpg"
+#define kSourceImageFileExtension   ".jpg"
 #define kBackgroundColor            0xFF
 
-#define kCROPPED_FOLDER_NAME        "Cropped"
-#define kRELIGHTED_FOLDER_NAME      "Relighted"
-#define kMERGED_FOLDER_NAME         "Merged"
+#define kCroppedFolderName          "Cropped"
+#define kRelightedFolderName        "Relighted"
+#define kMergedFolderName           "Merged"
 #define kMergerInfoFolderName       "MergerInfo"
+
 #define kTILED_FOLDER_NAME          "Tiled"
 #define kSCALED_FOLDER_NAME         "Scaled"
 #define kRotatedFolderName          "Rotated"
@@ -167,6 +165,135 @@ const QString indexedImagefileNameFormat = "NNNNN";
 
 #define kComposerUnitDepth              5
 
+
+
+class Setup
+{
+public:
+    Setup();
+
+public:
+    // enums
+    enum ErrorCode { Error = -1, Ok = 1 };
+    enum KnifeEdgeSide { LeftEdge, RightEdge };
+
+    // structs
+    struct tagNames {
+        QString column;
+        QString idString;
+        QString width;
+        QString image;
+        QString name;
+        QString startX;
+        QString newStartX;
+        QString valide;
+        QString adjust;
+        QString changed;
+        QString trueString;
+        QString falseString;
+    };
+
+    struct DirNames {
+        QString cropped;
+        QString relighted;
+        QString merged;
+        QString mergerInfo;
+        QString rotated;
+        QString attenuated;
+        // QString scaled;
+        // QStrign tiled; ??
+    };
+
+    struct Executable {
+        QString version;
+        QString filePathName;
+    };
+
+    struct Executables {
+        Executable tissueAreaDetector;
+        Executable tissueAreaOutlierRemover;
+        Executable cropper;
+        Executable relighter;
+        Executable merger;
+        Executable composer;
+    };
+
+    struct Controllers {
+        Executable tissueAreaDetectorController;
+        Executable tissueAreaOutlierRemoverController;
+        Executable cropperController;
+        Executable relighterController;
+        Executable mergerController;
+        Executable composerController;
+    };
+
+    // paramters for processors
+
+    struct TissueAreaDetectorInfo {
+        QString rawDataInfoFileName;
+        QString templateFileName;
+        QString numberOfDigitsInColumn;
+        QString rightEdgeWindowSize;
+    };
+
+    struct TissueAreaOutlierRemoverInfo {
+        int imageChunkThreshold;
+        int maxRightEdgeDifference;
+        int maxConsecutiveWrongImages;
+        int defaultFactorForWindowSize;
+        int maxOutlerImages;
+    };
+
+    struct RelighterInfo {
+        int minIntensityForRelight;
+        int maxIntensityForRelgith;
+    };
+
+    struct MergerInfo {
+        QString dirName;
+        QString fileName;
+        QString fileNameFormat;
+        QString invertImageFlag;
+
+        QString tagNumberOfImagesToMerge;
+        QString tagImageWidth;
+        QString tagImageHeight;
+        QString tagBaseDir;
+        QString tagEdge;
+        QString tagLeft;
+        QString tagRight;
+
+    };
+
+    struct ComposerInfo {
+        QString indexedImageFileNameFormat;
+        QString zPosFileNameFormat;
+        QString unitDepth;
+    };
+
+public:
+    // environments
+    bool debug;
+    ErrorCode errorCode;
+    QString imageFileExtension;
+    char minPixelIntensity;
+    char maxPixelIntensity;
+    char backGroundColor;
+
+    DirNames dirNames;
+
+    QString kesmSuitePathName;
+    Executables executables;
+    Controllers controllers;
+
+    // image processors info
+    TissueAreaDetectorInfo tissueAreaDetectorInfo;
+    TissueAreaOutlierRemoverInfo tissueAreaOutlierRemoverInfo;
+    RelighterInfo relighterInfo;
+    MergerInfo mergerInfo;
+    ComposerInfo composerInfo;
+};
+
 KESM_NAMESPACE_END
 
-#endif // KESM_H
+#endif // SETUP_H
