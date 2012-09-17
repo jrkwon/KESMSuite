@@ -105,6 +105,10 @@ int main(int argc, char *argv[])
     ProcessInfo processInfo;
     processInfo.init(args[1], args[2].toInt(), args[3].toInt(), args[4].toInt());
 
+    QString logTag;
+    if(args.size() > 5)
+        logTag = args[5];
+
     std::cout << ">>> KESM Composer Controller ver " << kComposerControllerVersion << " <<<" << std::endl;
     std::cout << "Control composers." << std::endl;
 
@@ -122,11 +126,16 @@ int main(int argc, char *argv[])
 
         QStringList argList;
         QString numberOfImages = QString("%1").arg(processInfo.args.numberOfImages);
-        argList << processInfo.args.baseFilePathName << processInfo.args.outputPath << numberOfImages;
 
-        std::cout << "processing... " << i << ": " << qPrintable(processInfo.args.baseFilePathName) << std::endl;
+        if(args.size() > 5)
+            argList << processInfo.args.baseFilePathName << processInfo.args.outputPath << numberOfImages << logTag;
+        else
+            argList << processInfo.args.baseFilePathName << processInfo.args.outputPath << numberOfImages;
+
+        std::cout << "Processing... " << i << ": " << qPrintable(processInfo.args.baseFilePathName) << std::endl;
 
         controller.process.startDetached(processInfo.processName, argList);
+        //controller.process.start(processInfo.processName, argList);
         // default max wait time is 30 sec.
         // if more than 30 sec needed, we got to wait more...
 

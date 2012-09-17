@@ -24,6 +24,10 @@ int main(int argc, char *argv[])
     QString outputPathName(args[2]);
     int numberOfImages = args[3].toInt();
 
+    QString logTag;
+    if(args.size() >= 5)
+        logTag = args[4];
+
     std::cout << "Base FilePath:    " << qPrintable(baseFilePathName) << std::endl;
     std::cout << "Output Path:      " << qPrintable(outputPathName) << std::endl;
     std::cout << "Number of images: " << numberOfImages << std::endl;
@@ -31,6 +35,10 @@ int main(int argc, char *argv[])
     //------------------------------------------------------------------------
     // Composer
     KESM::Composer composer(baseFilePathName, outputPathName, numberOfImages);
+
+    // for debug or data analysis
+    composer.logProcessingTime = true; // let's make log files
+    composer.logTag = logTag;
     composer.execute(false); // let's not overwrite
 
     return kKESM_OK; //a.exec();

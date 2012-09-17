@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QtCore/qmath.h>
 #include <QElapsedTimer>
+#include <QDateTime>
 #include "Composer.h"
 
 typedef itk::ImageFileReader<InputImageType>    ReaderType;
@@ -14,6 +15,8 @@ KESM_NAMESPACE_START
 
 Composer::Composer(QString baseFilePathName, QString outputPathName, int numberOfImages)
 {
+    this->logProcessingTime = false;
+
     this->baseFilePathName = QDir::fromNativeSeparators(baseFilePathName);
     this->outputPathName = QDir::fromNativeSeparators(outputPathName);
     QFileInfo pathInfo(this->baseFilePathName);
@@ -88,25 +91,48 @@ bool Composer::execute(bool overWrite/* = false*/)
     QFileInfo fileInfo(outputFilePathName);
     if(!overWrite && fileInfo.exists())
     {
-        qDebug("File exists: %s.", outputFilePathName);
+        qDebug() << "File exists: " << outputFilePathName;
         qDebug("Creating the file aborted.");
         return false;
     }
 
-    QElapsedTimer elpasedTime;
-    elpasedTime.start();
+    ///////////////////////////////////
+    // Making a log file
+    QTextStream logTextStream;
+    QDateTime now = QDateTime::currentDateTime();
+    QString logFileName = QString("%1-%2%3%4-%5%6%7%8.txt").arg(outputFilePathName)
+            .arg(now.date().year()).arg(now.date().month()).arg(now.date().day())
+            .arg(now.time().hour()).arg(now.time().minute()).arg(now.time().second()).arg(logTag);
+    QFile logFile(logFileName);
+
+    if(logProcessingTime) {
+        if(!logFile.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            qDebug() << "Error while creating a log file: " << logFileName;
+            return false;
+        }
+        logTextStream.setDevice(&logFile);
+        // make a header
+        logTextStream << "name\tread\tmerge\ttotal\n";
+    }
+
+
+    QElapsedTimer timerTotalTime;
+    timerTotalTime.start();
 
     IntensityAttenuation attenuated(kIntensityAtteunationFactor, kIntensityAttenuationInitPosition);
 
     // get ready pointers
     ReaderType::Pointer baseReader = ReaderType::New();
-    InputImageType::Pointer baseImage;
+    InputImageType::Pointer baseImage = InputImageType::New();
     ReaderType::Pointer layerReader = ReaderType::New();
-    InputImageType::Pointer layerImage;
-    OutputImageType::Pointer outputImage;
+    InputImageType::Pointer layerImage = InputImageType::New();
+    OutputImageType::Pointer outputImage = OutputImageType::New();
 
     qDebug("Starting...");
 
+    QElapsedTimer timerReadBaseFile;
+    timerReadBaseFile.start();
     ///////////////////////////////////
     // init image info with base image
     QString baseFilePathName = this->baseFilePathName;
@@ -115,6 +141,11 @@ bool Composer::execute(bool overWrite/* = false*/)
     imageWidth = baseReader->GetOutput()->GetLargestPossibleRegion().GetSize()[0];
     imageHeight = baseReader->GetOutput()->GetLargestPossibleRegion().GetSize()[1];
     baseImage = baseReader->GetOutput();
+
+    qint64 elapsedReadBaseFile = timerReadBaseFile.elapsed();
+    if(logProcessingTime)
+        logTextStream << baseFileName << "\t" << elapsedReadBaseFile << "\t" << 0 << "\t" << elapsedReadBaseFile << "\n";
+
 
     //QString layerFilePath;
 
@@ -141,13 +172,21 @@ bool Composer::execute(bool overWrite/* = false*/)
         QString layerFilePathName = QString("%1/%2").arg(basePathName).arg(layerFileName);
         // ----------------
         // 2. read the file
+        qDebug() << "- Start reading... " << layerFileName;
+        QElapsedTimer timerFileRead;
+        timerFileRead.start();
         layerReader->SetFileName(layerFilePathName.toStdString());
         layerReader->Update();
         layerImage = layerReader->GetOutput();
 
+        qint64 elapsedReadTime =  timerFileRead.elapsed();
+        qDebug("- Done (%d sec).", elapsedReadTime/1000);
+
+        if(logProcessingTime)
+            logTextStream << layerFileName << "\t" << elapsedReadTime;
+
         ////////////////////////////
         // output image
-        outputImage = OutputImageType::New();
         createImage(outputImage);
 
         ////////////////////////////
@@ -165,9 +204,9 @@ bool Composer::execute(bool overWrite/* = false*/)
         layerIt.GoToBegin();
         outputIt.GoToBegin();
 
-        qDebug("Merging %d...", baseIndex+depth);
-        QElapsedTimer timer;
-        timer.start();
+        qDebug("= (%d/%d) Merging %d...", depth+1, numberOfImages, baseIndex+depth);
+        QElapsedTimer timerMerge;
+        timerMerge.start();
 
         ////////////////////////////
         // intensity attenuation rate
@@ -197,25 +236,35 @@ bool Composer::execute(bool overWrite/* = false*/)
             layerIt.NextLine();
             outputIt.NextLine();
         }
-        qDebug("Merged.");
-
-        qDebug("The merge took %d seconds.", timer.elapsed()/1000);
+        qint64 elapsedMergeTime = timerMerge.elapsed();
+        qDebug("= Merged (%d sec).", elapsedMergeTime/1000);
+        if(logProcessingTime)
+            logTextStream << "\t" << elapsedMergeTime << "\t" << elapsedReadTime + elapsedMergeTime << "\n";
 
         // prepare the next image compose
+
         baseImage = NULL; // let ITK free allocated memory if it needed
         baseImage = outputImage;
+        outputImage = OutputImageType::New();
+        //layerImage = NULL; // let ITK free memory
 
     }
-    qDebug("Creating output.");
+    qDebug("-- Creating output.");
+    outputImage = NULL; // this will be release anyway since the progam ends soon.
 
     WriterType::Pointer writer = WriterType::New();
-    writer->SetInput(outputImage);
+    writer->SetInput(baseImage); // In fact, baseImage has the last outputImage
     writer->SetFileName(outputFilePathName.toStdString());
     writer->Update();
 
     qDebug("Done.");
 
-    qDebug("Merging %d images took %d seconds.", numberOfImages, elpasedTime.elapsed()/1000);
+    qint64 elapsedTotalTime = timerTotalTime.elapsed();
+    qDebug("Composing %d images took %d seconds.", numberOfImages, elapsedTotalTime/1000);
+    if(logProcessingTime) {
+        logTextStream << "Total\t\t\t" << elapsedTotalTime << "\n";
+        logFile.close();
+    }
 
     return true;
 }

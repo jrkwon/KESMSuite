@@ -1,6 +1,7 @@
 #ifndef KESM_H
 #define KESM_H
 
+#include <QDebug>
 #include <QString>
 #include <QVector>
 
@@ -47,23 +48,23 @@ KESM_NAMESPACE_START
 //-----------------------------------------------------------------------------
 // Tissue Area Detector
 
-#define KESM_SUITE_PATH                     "K:/Projects/KESMSuite/"
+#define KESM_SUITE_PATH                     "P:/KESMSuite"
 #ifdef kKESM_DEBUG
-#define kTISSUE_AREA_DETECTOR               KESM_SUITE_PATH"TissueAreaDetector-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaDetector.exe"
-#define kTISSUE_AREA_DETECTOR_CONTROLLER    KESM_SUITE_PATH"TissueAreaDetectorController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaDetectorController.exe"
-#define kTISSUE_AREA_OUTLIER_REMOVER        KESM_SUITE_PATH"TissueAreaOutlierRemover-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaOutlierRemover.exe"
-#define kCROPPER                            KESM_SUITE_PATH"Cropper-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Cropper.exe"
-#define kRELIGHTER                          KESM_SUITE_PATH"Relighter-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Relighter.exe"
-#define kMergerProcessName                  KESM_SUITE_PATH"Merger-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Merger.exe"
-#define kComposerProcessName                KESM_SUITE_PATH"Composer-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Composer.exe"
+#define kTISSUE_AREA_DETECTOR               KESM_SUITE_PATH"/TissueAreaDetector-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaDetector.exe"
+#define kTISSUE_AREA_DETECTOR_CONTROLLER    KESM_SUITE_PATH"/TissueAreaDetectorController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaDetectorController.exe"
+#define kTISSUE_AREA_OUTLIER_REMOVER        KESM_SUITE_PATH"/TissueAreaOutlierRemover-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaOutlierRemover.exe"
+#define kCROPPER                            KESM_SUITE_PATH"/Cropper-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Cropper.exe"
+#define kRELIGHTER                          KESM_SUITE_PATH"/Relighter-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Relighter.exe"
+#define kMergerProcessName                  KESM_SUITE_PATH"/Merger-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Merger.exe"
+#define kComposerProcessName                KESM_SUITE_PATH"/Composer-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Composer.exe"
 #else
-#define kTISSUE_AREA_DETECTOR               KESM_SUITE_PATH"bin/TissueAreaDetector.exe"
-#define kTISSUE_AREA_DETECTOR_CONTROLLER    KESM_SUITE_PATH"bin/TissueAreaDetectorController.exe"
-#define kTISSUE_AREA_OUTLIER_REMOVER        KESM_SUITE_PATH"bin/TissueAreaOutlierRemover.exe"
-#define kCROPPER                            KESM_SUITE_PATH"bin/Cropper.exe"
-#define kRELIGHTER                          KESM_SUITE_PATH"bin/Relighter.exe"
-#define kMergerProcessName                  KESM_SUITE_PATH"bin/Merger.exe"
-#define kComposerProcessName                KESM_SUITE_PATH"bin/Composer.exe"
+#define kTISSUE_AREA_DETECTOR               KESM_SUITE_PATH"/bin/TissueAreaDetector.exe"
+#define kTISSUE_AREA_DETECTOR_CONTROLLER    KESM_SUITE_PATH"/bin/TissueAreaDetectorController.exe"
+#define kTISSUE_AREA_OUTLIER_REMOVER        KESM_SUITE_PATH"/bin/TissueAreaOutlierRemover.exe"
+#define kCROPPER                            KESM_SUITE_PATH"/bin/Cropper.exe"
+#define kRELIGHTER                          KESM_SUITE_PATH"/bin/Relighter.exe"
+#define kMergerProcessName                  KESM_SUITE_PATH"/bin/Merger.exe"
+#define kComposerProcessName                KESM_SUITE_PATH"/bin/Composer.exe"
 #endif
 
 

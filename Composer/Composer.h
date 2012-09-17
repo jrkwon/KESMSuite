@@ -68,6 +68,9 @@ private:
     int imageWidth;
     int imageHeight;
 
+public:
+    bool logProcessingTime;
+    QString logTag;
 };
 
 KESM_NAMESPACE_END
