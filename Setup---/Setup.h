@@ -12,9 +12,7 @@
 // ------------------
 // these defintions are used to initialize the Setup object.
 
-#define kKESMDebug                  1
-
-#define kKESMSuitePathEnv           "KESMSUITE_HOMEPATH"
+#define kKesmDebug                  1
 
 #define kSourceImageFileExtension   ".jpg"
 #define kBackgroundColor            0xFF
@@ -33,49 +31,39 @@
 
 //-----------------------------------------------------------------------------
 // KESM Suite version
-#define kKESMSuiteVersion                                   "1.0"
-#define kTissueAreaDetectorVersion                          "1.0"
-#define kTissueAreaDetectorControllerVersion                "1.0"
-#define kTissueAreaOutlierRemoverVersion                    "1.0"
-#define kTissueAreaOutlierRemoverControllerVersion          "1.0"
-#define kCropperVersion                                     "1.0"
-#define kCropperControllerVersion                           "1.0"
-#define kRelighterVersion                                   "1.0"
-#define kRelighterControllerVersion                         "1.0"
-#define kMergerVersion                                      "1.0"
-#define kMergerControllerVersion                            "1.0"
-#define kComposerVersion                                    "1.0"
-#define kComposerControllerVersion                          "1.0"
+#define kKESMSuiteVersion                                   "0.8"
+#define kTissueAreaDetectorVersion                          "0.8"
+#define kTissueAreaDetectorControllerVersion                "0.8"
+#define kTissueAreaOutlierRemoverVersion                    "0.8"
+#define kTissueAreaOutlierRemoverControllerVersion          "0.8"
+#define kCropperVersion                                     "0.8"
+#define kCropperControllerVersion                           "0.8"
+#define kRelighterVersion                                   "0.8"
+#define kRelighterControllerVersion                         "0.8"
+#define kMergerVersion                                      "0.8"
+#define kMergerControllerVersion                            "0.8"
+#define kComposerVersion                                    "0.8"
+#define kComposerControllerVersion                          "0.8"
 
 //-----------------------------------------------------------------------------
 // KESMSuite execution files
-#define kTissueAreaDetectorName             "TissueAreaDetector"
-#define kCropperName                        "Cropper"
-#define kRelighterName                      "Relighter"
-#define kMergerName                         "Merger"
-#define kComposerName                       "Composer"
 
-#define kProcessExt                         ".exe"
-
-#ifdef kKESMDebug
-
-#define kDebugPartialPath                   "-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug"
-#define kTissueAreaDetectorProcessName      kTissueAreaDetectorName""kDebugPartialPath"/"kTissueAreaDetectorName""kProcessExt
-#define kCropperProcessName                 kCropperName""kDebugPartialPath"/"kCropperName""kProcessExt
-#define kRelighterProcessName               kRelighterName""kDebugPartialPath"/"kRelighterName""kProcessExt
-#define kMergerProcessName                  kMergerName""kDebugPartialPath"/"kMergerName""kProcessExt
-#define kComposerProcessName                kComposerName""kDebugPartialPath"/"kComposerName""kProcessExt
-
+#ifdef kKesmDebug
+#define kKESMSuitePath                      "P:/KESMSuite"
+#define kTissueAreaDetecor                  kKESMSuitePath"/TissueAreaDetector-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaDetector.exe"
+#define kTissueAreaOutlierRemover           kKESMSuitePath"/TissueAreaOutlierRemover-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/TissueAreaOutlierRemover.exe"
+#define kCropper                            kKESMSuitePath"/Cropper-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Cropper.exe"
+#define kRelighter                          kKESMSuitePath"/Relighter-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Relighter.exe"
+#define kMergerProcessName                  kKESMSuitePath"/Merger-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Merger.exe"
+#define kComposerProcessName                kKESMSuitePath"/Composer-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug/debug/Composer.exe"
 #else
-
-#define kReleasePartialPath                 "bin"
-#define kTissueAreaDetectorProcessName      kReleasePartialPath"/"kTissueAreaDetectorName""kProcessExt
-#define kCropperProcessName                 kReleasePartialPath"/"kCropperName""kProcessExt
-#define kRelighterProcessName               kReleasePartialPath"/"kRelighterName""kProcessExt
-#define kMergerProcessName                  kReleasePartialPath"/"kMergerName""kProcessExt
-#define kComposerProcessName                kReleasePartialPath"/"kComposerName""kProcessExt
-
-
+#define kKESMSuitePath                      "P:/KESMSuite"
+#define kTissueAreaDetecor                  kKESMSuitePath"/bin/TissueAreaDetector.exe"
+#define kTissueAreaOutlierRemover           kKESMSuitePath"/bin/TissueAreaOutlierRemover.exe"
+#define kCropper                            kKESMSuitePath"/bin/Cropper.exe"
+#define kRelighter                          kKESMSuitePath"/bin/Relighter.exe"
+#define kMergerProcessName                  kKESMSuitePath"/bin/Merger.exe"
+#define kComposerProcessName                kKESMSuitePath"/bin/Composer.exe"
 #endif
 
 
@@ -309,8 +297,5 @@ public:
 };
 
 KESM_NAMESPACE_END
-
-#endif // SETUP_H
-
 
 #endif // SETUP_H

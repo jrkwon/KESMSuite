@@ -6,10 +6,11 @@ Setup::Setup()
     imageFileExtension = ".jpg";
     minPixelIntensity = 0;
     maxPixelIntensity = 255;
-    backGroundColor = minPixelIntensity;
+    backgroundColor = minPixelIntensity;
 
     dirNames.cropped =      "Cropped";
-    dirNames.relighted =    "Relighted"
+    dirNames.relighted =    "Relighted";
+    dirNames.
 
     QString kesmSuitePathName;
     Executables executables;

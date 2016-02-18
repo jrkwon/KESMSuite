@@ -1,14 +1,23 @@
 #include "Setup.h"
+#include <QProcessEnvironment>
 
 Setup::Setup()
 {
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString kesmSuiteHomePath = env.value("KESMSUITE_HOMEPATH");
+    QStringList list = env.toStringList();
+    qDebug("%s", kesmSuiteHomePath);
+
+
     debug = true;
     imageFileExtension = ".jpg";
     minPixelIntensity = 0;
     maxPixelIntensity = 255;
-    backGroundColor = minPixelIntensity;
+    backgroundColor = minPixelIntensity;
 
-    dirNames.cropped = "Cropped";
+    dirNames.cropped =      "Cropped";
+    dirNames.relighted =    "Relighted";
+    dirNames.
 
     QString kesmSuitePathName;
     Executables executables;

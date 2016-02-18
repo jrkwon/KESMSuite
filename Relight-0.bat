@@ -1,0 +1,3 @@
+K:\Projects\KESMSuite\RelighterController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\RelighterController.exe "K:/Projects/KESMData/2008-01-23 Whole mouse brain vasculature" 0
+
+K:\Projects\KESMSuite\TissueAreaDetectorController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\TissueAreaDetectorController.exe "K:/KESMRawData/2008-01-23 Whole mouse brain vasculature" K:/Projects/KESMData 1

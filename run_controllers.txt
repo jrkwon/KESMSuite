@@ -1,0 +1,35 @@
+// tissue area detector
+K:\Projects\KESMSuite\TissueAreaDetectorController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\TissueAreaDetectorController.exe "K:/KESMRawData/2008-01-23 Whole mouse brain vasculature" K:/Projects/KESMData 0
+
+// outlier remover
+K:\Projects\KESMSuite\TissueAreaOutlierRemoverController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\TissueAreaOutlierRemoverController.exe "K:/Projects/KESMData/2008-01-23 Whole mouse brain vasculature" 0
+
+// cropper
+K:\Projects\KESMSuite\CropperController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\CropperController.exe "K:/KESMRawData/2008-01-23 Whole mouse brain vasculature" K:/Projects/KESMData 0
+
+// relighter
+K:\Projects\KESMSuite\RelighterController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\RelighterController.exe "K:/Projects/KESMData/2008-01-23 Whole mouse brain vasculature" 0
+
+// get merge info
+K:\Projects\KESMSuite\GenMergerInfo-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\GenMergerInfo.exe "K:\Projects\KESMData\2008-01-23 Whole mouse brain vasculature\Relighted" "K:\Projects\KESMData\2008-01-23 Whole mouse brain vasculature\MergerInfo"
+
+// merger controller
+K:\Projects\KESMSuite\MergerController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\MergerController.exe "K:\Projects\KESMData\2008-01-23 Whole mouse brain vasculature"
+
+// composer controller
+P:\KESMSuite\ComposerController-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\ComposerController.exe "P:\KESMData\2008-01-23 Whole mouse brain vasculature\Rotated" 3800 3900 40
+
+
+
+
+
+
+
+
+
+-------------------
+//K:\Projects\KESMSuite\TissueAreaOutlierRemover-build-desktop-Qt_4_7_4_for_Desktop_-_MSVC2008__Qt_SDK__Debug\debug\TissueAreaOutlierRemover.exe "K:\Projects\KESMData\2008-01-23 Whole mouse brain vasculature\Cropped\Raw_0.xml" "K:\Projects\KESMData\2008-01-23 Whole mouse brain vasculature\Cropped\0.xml" "K:\Projects\KESMData\2008-01-23 Whole mouse brain vasculature\Cropped\0.csv" "K:\Projects\KESMData\2008-01-23 Whole mouse brain vasculature\Cropped\0.txt" 
+
+
+
+
